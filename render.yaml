@@ -1,0 +1,30 @@
+databases:
+  - name: soberana-db
+    plan: free
+    databaseName: soberana_db
+    user: postgres
+
+services:
+  - type: web
+    name: soberana-api
+    runtime: docker
+    plan: free
+    dockerfilePath: Dockerfile
+    dockerContext: backend
+    envVars:
+      - key: ConnectionStrings__DefaultConnection
+        fromDatabase:
+          name: soberana-db
+          property: connectionString
+
+  - type: web
+    name: soberana-frontend
+    runtime: static
+    plan: free
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist/frontend/browser
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

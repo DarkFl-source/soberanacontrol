@@ -12,6 +12,13 @@ builder.Services.AddDbContext<SoberanaControl.Infrastructure.Data.ApplicationDbC
 
 var app = builder.Build();
 
+// Auto-Apply Database Migrations (útil para nuvem como o Render)
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<SoberanaControl.Infrastructure.Data.ApplicationDbContext>();
+    dbContext.Database.Migrate();
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
