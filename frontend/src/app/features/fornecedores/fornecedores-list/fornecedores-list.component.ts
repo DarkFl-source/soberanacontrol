@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FornecedoresService } from '../../../core/services/fornecedores.service';
+import { MaskDirective } from '../../../shared/directives/mask.directive';
 
 @Component({
   selector: 'app-fornecedores-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MaskDirective],
   templateUrl: './fornecedores-list.component.html',
   styleUrl: './fornecedores-list.component.css'
 })
@@ -17,6 +18,7 @@ export class FornecedoresListComponent implements OnInit {
   isSaving = false;
   errorMessage = '';
 
+  touched = false;
   novoFornecedor = { cnpj: '', razaoSocial: '', contato: '', endereco: '' };
 
   constructor(private service: FornecedoresService) {}
@@ -34,12 +36,14 @@ export class FornecedoresListComponent implements OnInit {
   openModal(): void {
     this.novoFornecedor = { cnpj: '', razaoSocial: '', contato: '', endereco: '' };
     this.errorMessage = '';
+    this.touched = false;
     this.showModal = true;
   }
 
   closeModal(): void { this.showModal = false; }
 
   salvar(): void {
+    this.touched = true;
     if (!this.novoFornecedor.razaoSocial.trim() || !this.novoFornecedor.cnpj.trim()) {
       this.errorMessage = 'Razão Social e CNPJ são obrigatórios.';
       return;
