@@ -1,0 +1,3 @@
+D:\Desenvolvimento\SoberanaControl\backend\app\publish\SoberanaControl.Domain.dll
+D:\Desenvolvimento\SoberanaControl\backend\app\publish\SoberanaControl.Domain.deps.json
+D:\Desenvolvimento\SoberanaControl\backend\app\publish\SoberanaControl.Domain.pdb

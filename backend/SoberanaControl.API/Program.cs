@@ -15,8 +15,33 @@ var app = builder.Build();
 // Auto-Apply Database Migrations (útil para nuvem como o Render)
 using (var scope = app.Services.CreateScope())
 {
-    var dbContext = scope.ServiceProvider.GetRequiredService<SoberanaControl.Infrastructure.Data.ApplicationDbContext>();
-    dbContext.Database.Migrate();
+    var services = scope.ServiceProvider;
+    try
+    {
+        var dbContext = services.GetRequiredService<SoberanaControl.Infrastructure.Data.ApplicationDbContext>();
+        
+        // Retry logic for cloud environments where DB might still be booting up
+        var retryCount = 5;
+        while (retryCount > 0)
+        {
+            try
+            {
+                dbContext.Database.Migrate();
+                break;
+            }
+            catch (Exception)
+            {
+                retryCount--;
+                if (retryCount == 0) throw;
+                System.Threading.Thread.Sleep(3000); // Wait 3 seconds before retry
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "Ocorreu um erro durante a migração do banco de dados.");
+    }
 }
 
 // Configure the HTTP request pipeline.

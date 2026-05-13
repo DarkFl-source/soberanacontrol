@@ -1,0 +1,16 @@
+D:\Desenvolvimento\SoberanaControl\backend\SoberanaControl.Application\bin\Release\net8.0\SoberanaControl.Application.deps.json
+D:\Desenvolvimento\SoberanaControl\backend\SoberanaControl.Application\bin\Release\net8.0\SoberanaControl.Application.dll
+D:\Desenvolvimento\SoberanaControl\backend\SoberanaControl.Application\bin\Release\net8.0\SoberanaControl.Application.pdb
+D:\Desenvolvimento\SoberanaControl\backend\SoberanaControl.Application\bin\Release\net8.0\SoberanaControl.Domain.dll
+D:\Desenvolvimento\SoberanaControl\backend\SoberanaControl.Application\bin\Release\net8.0\SoberanaControl.Domain.pdb
+D:\Desenvolvimento\SoberanaControl\backend\SoberanaControl.Application\obj\Release\net8.0\SoberanaControl.Application.csproj.AssemblyReference.cache
+D:\Desenvolvimento\SoberanaControl\backend\SoberanaControl.Application\obj\Release\net8.0\SoberanaControl.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\Desenvolvimento\SoberanaControl\backend\SoberanaControl.Application\obj\Release\net8.0\SoberanaControl.Application.AssemblyInfoInputs.cache
+D:\Desenvolvimento\SoberanaControl\backend\SoberanaControl.Application\obj\Release\net8.0\SoberanaControl.Application.AssemblyInfo.cs
+D:\Desenvolvimento\SoberanaControl\backend\SoberanaControl.Application\obj\Release\net8.0\SoberanaControl.Application.csproj.CoreCompileInputs.cache
+D:\Desenvolvimento\SoberanaControl\backend\SoberanaControl.Application\obj\Release\net8.0\SoberanaControl.Application.sourcelink.json
+D:\Desenvolvimento\SoberanaControl\backend\SoberanaControl.Application\obj\Release\net8.0\Soberana.2B78BF05.Up2Date
+D:\Desenvolvimento\SoberanaControl\backend\SoberanaControl.Application\obj\Release\net8.0\SoberanaControl.Application.dll
+D:\Desenvolvimento\SoberanaControl\backend\SoberanaControl.Application\obj\Release\net8.0\refint\SoberanaControl.Application.dll
+D:\Desenvolvimento\SoberanaControl\backend\SoberanaControl.Application\obj\Release\net8.0\SoberanaControl.Application.pdb
+D:\Desenvolvimento\SoberanaControl\backend\SoberanaControl.Application\obj\Release\net8.0\ref\SoberanaControl.Application.dll
