@@ -24,9 +24,9 @@ namespace SoberanaControl.Infrastructure.Data
             if (!await context.Obras.AnyAsync())
             {
                 context.Obras.AddRange(
-                    new Obra("Residencial Alpha", "Rua das Flores, 123", DateTime.UtcNow),
-                    new Obra("Torre Empresarial Sul", "Av. Paulista, 1000", DateTime.UtcNow),
-                    new Obra("Reforma Almoxarifado Central", "Rua Industrial, 50", DateTime.UtcNow)
+                    new Obra("Residencial Alpha", "Rua das Flores, 123"),
+                    new Obra("Torre Empresarial Sul", "Av. Paulista, 1000"),
+                    new Obra("Reforma Almoxarifado Central", "Rua Industrial, 50")
                 );
                 await context.SaveChangesAsync();
             }
@@ -81,11 +81,11 @@ namespace SoberanaControl.Infrastructure.Data
             {
                 var p1 = new Produto("CIM-001", "Cimento CP II 50kg", catAlvenaria.Id, unSc.Id, 100);
                 p1.AtualizarPrecoMedio(35.50m);
-                
-                var p2 = new Produto("TIN-001", "Tinta Acrílica Branca 18L", catAcabamento.Id, unLt.Id, 20);
+
+                var p2 = new Produto("TIN-001", "Tinta Acrilica Branca 18L", catAcabamento.Id, unLt.Id, 20);
                 p2.AtualizarPrecoMedio(250.00m);
 
-                var p3 = new Produto("ACO-001", "Vergalhão 10mm 12m", catEstrutural.Id, unKg.Id, 500);
+                var p3 = new Produto("ACO-001", "Vergalhao 10mm 12m", catEstrutural.Id, unKg.Id, 500);
                 p3.AtualizarPrecoMedio(8.90m);
 
                 context.Produtos.AddRange(p1, p2, p3);

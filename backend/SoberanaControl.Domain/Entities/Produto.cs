@@ -14,10 +14,11 @@ public class Produto : Entity
 
     protected Produto() { }
 
-    public Produto(string codigoInterno, string nome, Guid categoriaId, Guid unidadeMedidaId, decimal estoqueMinimo = 0)
+    public Produto(string codigoInterno, string nome, Guid categoriaId, Guid unidadeMedidaId, decimal estoqueMinimo = 0, string descricao = "")
     {
         CodigoInterno = codigoInterno;
         Nome = nome;
+        Descricao = descricao;
         CategoriaId = categoriaId;
         UnidadeMedidaId = unidadeMedidaId;
         EstoqueMinimo = estoqueMinimo;
