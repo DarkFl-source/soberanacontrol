@@ -13,7 +13,7 @@ services:
     dockerContext: backend
     envVars:
       - key: ConnectionStrings__DefaultConnection
-        value: Host=soberana-db;Database=soberana_db;Username=soberana_user;Password=E2ysLo26epYUfw2qQgrBSd75YhzZxRgT;SSL Mode=Disable;Trust Server Certificate=true
+        value: Host=dpg-d81td777f7vs73efue6g-a;Database=soberana_db;Username=soberana_user;Password=E2ysLo26epYUfw2qQgrBSd75YhzZxRgT;SSL Mode=Disable;Trust Server Certificate=true
 
   - type: web
     name: soberana-frontend
