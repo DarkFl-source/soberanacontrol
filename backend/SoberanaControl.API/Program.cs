@@ -32,6 +32,7 @@ builder.Services.AddScoped<SoberanaControl.Application.Interfaces.IApplicationDb
     provider => provider.GetRequiredService<SoberanaControl.Infrastructure.Data.ApplicationDbContext>());
 builder.Services.AddScoped<SoberanaControl.Application.Services.NFeParserService>();
 builder.Services.AddScoped<SoberanaControl.Application.UseCases.ImportarNfeUseCase>();
+builder.Services.AddScoped<SoberanaControl.Application.UseCases.RegistrarMovimentacaoUseCase>();
 
 var app = builder.Build();
 
