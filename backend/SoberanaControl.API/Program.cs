@@ -32,6 +32,10 @@ using (var scope = app.Services.CreateScope())
             try
             {
                 dbContext.Database.Migrate();
+                
+                // Aplicar Seed Data
+                SoberanaControl.Infrastructure.Data.DbSeeder.SeedAsync(dbContext).Wait();
+                
                 break;
             }
             catch (Exception)
