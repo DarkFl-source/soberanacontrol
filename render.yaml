@@ -2,7 +2,7 @@ databases:
   - name: soberana-db
     plan: free
     databaseName: soberana_db
-    user: postgres
+    user: soberana_user
 
 services:
   - type: web
