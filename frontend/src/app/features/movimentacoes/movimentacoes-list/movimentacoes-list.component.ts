@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MovimentacoesService, Movimentacao } from '../../../core/services/movimentacoes.service';
+import { MovimentacaoFormComponent } from '../movimentacao-form/movimentacao-form.component';
 
 @Component({
   selector: 'app-movimentacoes-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MovimentacaoFormComponent],
   templateUrl: './movimentacoes-list.component.html',
   styleUrls: ['./movimentacoes-list.component.css']
 })
 export class MovimentacoesListComponent implements OnInit {
   movimentacoes: Movimentacao[] = [];
   isLoading = true;
+  showForm = false;
 
   constructor(private movService: MovimentacoesService) {}
 
