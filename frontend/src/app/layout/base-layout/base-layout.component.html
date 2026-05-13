@@ -1,0 +1,26 @@
+<div class="flex h-screen bg-slate-100 font-sans">
+  <!-- Sidebar -->
+  <app-sidebar class="w-64 flex-shrink-0 border-r border-slate-200 bg-white hidden md:block"></app-sidebar>
+
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Navbar (Header) -->
+    <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6">
+      <div class="flex items-center">
+        <!-- Mobile menu button could go here -->
+        <h1 class="text-xl font-semibold text-slate-800">Soberana Control</h1>
+      </div>
+      <div class="flex items-center space-x-4">
+        <!-- User Profile Dropdown -->
+        <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold">
+          U
+        </div>
+      </div>
+    </header>
+
+    <!-- Main View -->
+    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-slate-50 p-6">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
