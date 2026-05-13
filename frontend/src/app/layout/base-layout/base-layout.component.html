@@ -26,7 +26,10 @@
             <path *ngIf="isMobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
-        <h1 class="text-lg md:text-xl font-semibold text-slate-800">Soberana Control</h1>
+        <div class="flex items-center">
+          <img src="assets/images/logo.png" alt="Soberana Control" class="h-8 w-auto md:hidden mr-2">
+          <h1 class="text-lg md:text-xl font-semibold text-slate-800 hidden md:block">Soberana Control</h1>
+        </div>
       </div>
       <div class="flex items-center space-x-4">
         <!-- User Profile Dropdown -->
