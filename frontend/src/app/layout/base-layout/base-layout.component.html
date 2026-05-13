@@ -1,25 +1,43 @@
-<div class="flex h-screen bg-slate-100 font-sans">
+<div class="flex h-screen bg-slate-100 font-sans relative">
+  <!-- Mobile Overlay -->
+  <div 
+    *ngIf="isMobileMenuOpen" 
+    class="fixed inset-0 z-20 bg-black bg-opacity-50 transition-opacity md:hidden"
+    (click)="closeMobileMenu()">
+  </div>
+
   <!-- Sidebar -->
-  <app-sidebar class="w-64 flex-shrink-0 border-r border-slate-200 bg-white hidden md:block"></app-sidebar>
+  <app-sidebar 
+    class="w-64 flex-shrink-0 border-r border-slate-200 bg-white absolute inset-y-0 left-0 z-30 transform transition-transform duration-300 md:relative md:translate-x-0"
+    [ngClass]="{'translate-x-0': isMobileMenuOpen, '-translate-x-full': !isMobileMenuOpen}">
+  </app-sidebar>
 
   <!-- Main Content -->
-  <div class="flex-1 flex flex-col overflow-hidden">
+  <div class="flex-1 flex flex-col overflow-hidden w-full">
     <!-- Navbar (Header) -->
-    <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6">
+    <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 md:px-6">
       <div class="flex items-center">
-        <!-- Mobile menu button could go here -->
-        <h1 class="text-xl font-semibold text-slate-800">Soberana Control</h1>
+        <!-- Mobile menu button -->
+        <button 
+          (click)="toggleMobileMenu()"
+          class="p-2 mr-3 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-md md:hidden focus:outline-none">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path *ngIf="!isMobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            <path *ngIf="isMobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <h1 class="text-lg md:text-xl font-semibold text-slate-800">Soberana Control</h1>
       </div>
       <div class="flex items-center space-x-4">
         <!-- User Profile Dropdown -->
-        <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold">
+        <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm">
           U
         </div>
       </div>
     </header>
 
     <!-- Main View -->
-    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-slate-50 p-6">
+    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-slate-50 p-4 md:p-6" (click)="closeMobileMenu()">
       <router-outlet></router-outlet>
     </main>
   </div>
