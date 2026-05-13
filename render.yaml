@@ -13,7 +13,7 @@ services:
     dockerContext: backend
     envVars:
       - key: ConnectionStrings__DefaultConnection
-        value: postgresql://soberana_user:E2ysLo26epYUfw2qQgrBSd75YhzZxRgT@dpg-d81td777f7vs73efue6g-a/soberana_db
+        value: postgresql://soberana_user:E2ysLo26epYUfw2qQgrBSd75YhzZxRgT@soberana-db/soberana_db
 
   - type: web
     name: soberana-frontend
