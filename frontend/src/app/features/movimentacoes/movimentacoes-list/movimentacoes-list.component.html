@@ -81,11 +81,11 @@
       </table>
     </div>
   </div>
-
-  <!-- Modal de Movimentação -->
-  <app-movimentacao-form 
-    *ngIf="showForm"
-    (onClose)="showForm = false"
-    (onSave)="showForm = false; loadMovimentacoes()">
-  </app-movimentacao-form>
 </div>
+
+<!-- Modal de Movimentação (Movido para fora do contêiner animado) -->
+<app-movimentacao-form 
+  *ngIf="showForm"
+  (onClose)="showForm = false"
+  (onSave)="showForm = false; loadMovimentacoes()">
+</app-movimentacao-form>
