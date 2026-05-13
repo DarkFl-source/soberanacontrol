@@ -18,4 +18,12 @@ export class ObrasService {
   criarObra(data: { nome: string; endereco: string }): Observable<any> {
     return this.http.post<any>(this.apiUrl, data);
   }
+
+  atualizarObra(id: string, data: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, data);
+  }
+
+  deletarObra(id: string): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/${id}`);
+  }
 }

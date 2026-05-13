@@ -31,6 +31,26 @@ public class FornecedoresController : ControllerBase
         await _context.SaveChangesAsync();
         return CreatedAtAction(nameof(Get), new { id = fornecedor.Id }, fornecedor);
     }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(Guid id, [FromBody] FornecedorRequest request)
+    {
+        var fornecedor = await _context.Fornecedores.FindAsync(id);
+        if (fornecedor == null) return NotFound();
+        fornecedor.Atualizar(request.Cnpj, request.RazaoSocial, request.Contato, request.Endereco);
+        await _context.SaveChangesAsync();
+        return Ok(fornecedor);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        var fornecedor = await _context.Fornecedores.FindAsync(id);
+        if (fornecedor == null) return NotFound();
+        _context.Fornecedores.Remove(fornecedor);
+        await _context.SaveChangesAsync();
+        return NoContent();
+    }
 }
 
 public record FornecedorRequest(string Cnpj, string RazaoSocial, string Contato, string Endereco);

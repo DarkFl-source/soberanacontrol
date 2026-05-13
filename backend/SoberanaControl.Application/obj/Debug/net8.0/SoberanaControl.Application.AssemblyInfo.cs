@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SoberanaControl.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f7e26b65ca7f9aabadf4bb95928939275ba20669")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e21524d940c9f5cacfaa63d9aa22e83247faf751")]
 [assembly: System.Reflection.AssemblyProductAttribute("SoberanaControl.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SoberanaControl.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

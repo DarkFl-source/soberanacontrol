@@ -14,51 +14,80 @@ export class ObrasListComponent implements OnInit {
   obras: any[] = [];
   isLoading = true;
   showModal = false;
+  showDeleteConfirm = false;
   isSaving = false;
+  isDeleting = false;
   errorMessage = '';
+  touched = false;
 
-  novaObra = { nome: '', endereco: '' };
+  editingId: string | null = null;
+  deletingId: string | null = null;
+  deletingNome = '';
 
-  constructor(private obrasService: ObrasService) {}
+  form = { nome: '', endereco: '' };
 
-  ngOnInit(): void {
-    this.load();
-  }
+  get isEditMode() { return !!this.editingId; }
+
+  constructor(private service: ObrasService) {}
+
+  ngOnInit(): void { this.load(); }
 
   load(): void {
     this.isLoading = true;
-    this.obrasService.getObras().subscribe({
+    this.service.getObras().subscribe({
       next: (data) => { this.obras = data; this.isLoading = false; },
       error: () => { this.isLoading = false; }
     });
   }
 
-  openModal(): void {
-    this.novaObra = { nome: '', endereco: '' };
+  openCreate(): void {
+    this.editingId = null;
+    this.form = { nome: '', endereco: '' };
     this.errorMessage = '';
+    this.touched = false;
     this.showModal = true;
   }
 
-  closeModal(): void {
-    this.showModal = false;
+  openEdit(obra: any): void {
+    this.editingId = obra.id;
+    this.form = { nome: obra.nome ?? '', endereco: obra.endereco ?? '' };
+    this.errorMessage = '';
+    this.touched = false;
+    this.showModal = true;
+  }
+
+  closeModal(): void { this.showModal = false; }
+
+  confirmDelete(obra: any): void {
+    this.deletingId = obra.id;
+    this.deletingNome = obra.nome;
+    this.showDeleteConfirm = true;
+  }
+
+  cancelDelete(): void { this.showDeleteConfirm = false; this.deletingId = null; }
+
+  deletar(): void {
+    if (!this.deletingId) return;
+    this.isDeleting = true;
+    this.service.deletarObra(this.deletingId).subscribe({
+      next: () => { this.isDeleting = false; this.cancelDelete(); this.load(); },
+      error: () => { this.isDeleting = false; this.cancelDelete(); }
+    });
   }
 
   salvar(): void {
-    if (!this.novaObra.nome.trim()) {
+    this.touched = true;
+    if (!this.form.nome.trim()) {
       this.errorMessage = 'O nome da obra é obrigatório.';
       return;
     }
     this.isSaving = true;
-    this.obrasService.criarObra(this.novaObra).subscribe({
-      next: () => {
-        this.isSaving = false;
-        this.closeModal();
-        this.load();
-      },
-      error: () => {
-        this.isSaving = false;
-        this.errorMessage = 'Erro ao salvar. Tente novamente.';
-      }
+    const op = this.isEditMode
+      ? this.service.atualizarObra(this.editingId!, this.form)
+      : this.service.criarObra(this.form);
+    op.subscribe({
+      next: () => { this.isSaving = false; this.closeModal(); this.load(); },
+      error: () => { this.isSaving = false; this.errorMessage = 'Erro ao salvar. Tente novamente.'; }
     });
   }
 }

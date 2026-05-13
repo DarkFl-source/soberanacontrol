@@ -19,6 +19,14 @@ export class ProdutosService {
     return this.http.post<any>(this.apiUrl, data);
   }
 
+  atualizarProduto(id: string, data: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, data);
+  }
+
+  deletarProduto(id: string): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/${id}`);
+  }
+
   getCategorias(): Observable<any[]> {
     return this.http.get<any[]>(`${environment.apiUrl}/categorias`);
   }

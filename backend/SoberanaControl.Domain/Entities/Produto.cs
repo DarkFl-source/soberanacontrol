@@ -29,4 +29,13 @@ public class Produto : Entity
     {
         PrecoMedio = novoPrecoMedio;
     }
+
+    public void Atualizar(string codigoInterno, string nome, Guid categoriaId, Guid unidadeMedidaId, decimal estoqueMinimo)
+    {
+        CodigoInterno = codigoInterno;
+        Nome = nome;
+        CategoriaId = categoriaId;
+        UnidadeMedidaId = unidadeMedidaId;
+        EstoqueMinimo = estoqueMinimo;
+    }
 }

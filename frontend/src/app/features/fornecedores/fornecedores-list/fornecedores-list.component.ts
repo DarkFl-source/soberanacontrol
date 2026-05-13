@@ -15,11 +15,19 @@ export class FornecedoresListComponent implements OnInit {
   fornecedores: any[] = [];
   isLoading = true;
   showModal = false;
+  showDeleteConfirm = false;
   isSaving = false;
+  isDeleting = false;
   errorMessage = '';
-
   touched = false;
-  novoFornecedor = { cnpj: '', razaoSocial: '', contato: '', endereco: '' };
+
+  editingId: string | null = null;
+  deletingId: string | null = null;
+  deletingNome = '';
+
+  form = { cnpj: '', razaoSocial: '', contato: '', endereco: '' };
+
+  get isEditMode() { return !!this.editingId; }
 
   constructor(private service: FornecedoresService) {}
 
@@ -33,8 +41,17 @@ export class FornecedoresListComponent implements OnInit {
     });
   }
 
-  openModal(): void {
-    this.novoFornecedor = { cnpj: '', razaoSocial: '', contato: '', endereco: '' };
+  openCreate(): void {
+    this.editingId = null;
+    this.form = { cnpj: '', razaoSocial: '', contato: '', endereco: '' };
+    this.errorMessage = '';
+    this.touched = false;
+    this.showModal = true;
+  }
+
+  openEdit(forn: any): void {
+    this.editingId = forn.id;
+    this.form = { cnpj: forn.cnpj ?? '', razaoSocial: forn.razaoSocial ?? '', contato: forn.contato ?? '', endereco: forn.endereco ?? '' };
     this.errorMessage = '';
     this.touched = false;
     this.showModal = true;
@@ -42,14 +59,34 @@ export class FornecedoresListComponent implements OnInit {
 
   closeModal(): void { this.showModal = false; }
 
+  confirmDelete(forn: any): void {
+    this.deletingId = forn.id;
+    this.deletingNome = forn.razaoSocial;
+    this.showDeleteConfirm = true;
+  }
+
+  cancelDelete(): void { this.showDeleteConfirm = false; this.deletingId = null; }
+
+  deletar(): void {
+    if (!this.deletingId) return;
+    this.isDeleting = true;
+    this.service.deletarFornecedor(this.deletingId).subscribe({
+      next: () => { this.isDeleting = false; this.cancelDelete(); this.load(); },
+      error: () => { this.isDeleting = false; this.cancelDelete(); }
+    });
+  }
+
   salvar(): void {
     this.touched = true;
-    if (!this.novoFornecedor.razaoSocial.trim() || !this.novoFornecedor.cnpj.trim()) {
+    if (!this.form.razaoSocial.trim() || !this.form.cnpj.trim()) {
       this.errorMessage = 'Razão Social e CNPJ são obrigatórios.';
       return;
     }
     this.isSaving = true;
-    this.service.criarFornecedor(this.novoFornecedor).subscribe({
+    const op = this.isEditMode
+      ? this.service.atualizarFornecedor(this.editingId!, this.form)
+      : this.service.criarFornecedor(this.form);
+    op.subscribe({
       next: () => { this.isSaving = false; this.closeModal(); this.load(); },
       error: () => { this.isSaving = false; this.errorMessage = 'Erro ao salvar. Tente novamente.'; }
     });

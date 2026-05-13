@@ -16,4 +16,12 @@ public class Fornecedor : Entity
         Contato = contato;
         Endereco = endereco;
     }
+
+    public void Atualizar(string cnpj, string razaoSocial, string contato, string endereco)
+    {
+        Cnpj = cnpj;
+        RazaoSocial = razaoSocial;
+        Contato = contato;
+        Endereco = endereco;
+    }
 }

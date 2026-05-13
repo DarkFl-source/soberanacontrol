@@ -14,4 +14,10 @@ public class Obra : Entity
         Endereco = endereco;
         Ativo = true;
     }
+
+    public void Atualizar(string nome, string endereco)
+    {
+        Nome = nome;
+        Endereco = endereco;
+    }
 }

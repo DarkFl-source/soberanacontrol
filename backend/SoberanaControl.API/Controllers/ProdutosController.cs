@@ -34,6 +34,26 @@ public class ProdutosController : ControllerBase
         await _context.SaveChangesAsync();
         return Ok(produto);
     }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(Guid id, [FromBody] ProdutoRequest request)
+    {
+        var produto = await _context.Produtos.FindAsync(id);
+        if (produto == null) return NotFound();
+        produto.Atualizar(request.CodigoInterno, request.Nome, request.CategoriaId, request.UnidadeMedidaId, request.EstoqueMinimo);
+        await _context.SaveChangesAsync();
+        return Ok(produto);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        var produto = await _context.Produtos.FindAsync(id);
+        if (produto == null) return NotFound();
+        _context.Produtos.Remove(produto);
+        await _context.SaveChangesAsync();
+        return NoContent();
+    }
 }
 
 public record ProdutoRequest(string CodigoInterno, string Nome, Guid CategoriaId, Guid UnidadeMedidaId, decimal EstoqueMinimo);
