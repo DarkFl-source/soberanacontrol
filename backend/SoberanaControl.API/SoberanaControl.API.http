@@ -1,0 +1,6 @@
+@SoberanaControl.API_HostAddress = http://localhost:5101
+
+GET {{SoberanaControl.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,14 @@
+# Ignore Docker files if needed locally
+# .env
+
+# Backend (.NET)
+backend/bin/
+backend/obj/
+backend/.vs/
+backend/*.user
+backend/*.suo
+
+# Frontend (Angular)
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
