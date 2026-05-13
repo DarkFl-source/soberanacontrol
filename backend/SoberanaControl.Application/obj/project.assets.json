@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net8.0": {}
+    "net8.0": {
+      "SoberanaControl.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/SoberanaControl.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SoberanaControl.Domain.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "SoberanaControl.Domain/1.0.0": {
+      "type": "project",
+      "path": "../SoberanaControl.Domain/SoberanaControl.Domain.csproj",
+      "msbuildProject": "../SoberanaControl.Domain/SoberanaControl.Domain.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net8.0": []
+    "net8.0": [
+      "SoberanaControl.Domain >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\MOREFINE\\.nuget\\packages\\": {}
@@ -31,7 +50,11 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\Desenvolvimento\\SoberanaControl\\backend\\SoberanaControl.Domain\\SoberanaControl.Domain.csproj": {
+              "projectPath": "D:\\Desenvolvimento\\SoberanaControl\\backend\\SoberanaControl.Domain\\SoberanaControl.Domain.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

@@ -1,0 +1,12 @@
+D:\Desenvolvimento\SoberanaControl\backend\SoberanaControl.Domain\bin\Debug\net8.0\SoberanaControl.Domain.deps.json
+D:\Desenvolvimento\SoberanaControl\backend\SoberanaControl.Domain\bin\Debug\net8.0\SoberanaControl.Domain.dll
+D:\Desenvolvimento\SoberanaControl\backend\SoberanaControl.Domain\bin\Debug\net8.0\SoberanaControl.Domain.pdb
+D:\Desenvolvimento\SoberanaControl\backend\SoberanaControl.Domain\obj\Debug\net8.0\SoberanaControl.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\Desenvolvimento\SoberanaControl\backend\SoberanaControl.Domain\obj\Debug\net8.0\SoberanaControl.Domain.AssemblyInfoInputs.cache
+D:\Desenvolvimento\SoberanaControl\backend\SoberanaControl.Domain\obj\Debug\net8.0\SoberanaControl.Domain.AssemblyInfo.cs
+D:\Desenvolvimento\SoberanaControl\backend\SoberanaControl.Domain\obj\Debug\net8.0\SoberanaControl.Domain.csproj.CoreCompileInputs.cache
+D:\Desenvolvimento\SoberanaControl\backend\SoberanaControl.Domain\obj\Debug\net8.0\SoberanaControl.Domain.sourcelink.json
+D:\Desenvolvimento\SoberanaControl\backend\SoberanaControl.Domain\obj\Debug\net8.0\SoberanaControl.Domain.dll
+D:\Desenvolvimento\SoberanaControl\backend\SoberanaControl.Domain\obj\Debug\net8.0\refint\SoberanaControl.Domain.dll
+D:\Desenvolvimento\SoberanaControl\backend\SoberanaControl.Domain\obj\Debug\net8.0\SoberanaControl.Domain.pdb
+D:\Desenvolvimento\SoberanaControl\backend\SoberanaControl.Domain\obj\Debug\net8.0\ref\SoberanaControl.Domain.dll
