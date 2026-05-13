@@ -14,4 +14,8 @@ export class FornecedoresService {
   getFornecedores(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
+
+  criarFornecedor(data: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, data);
+  }
 }

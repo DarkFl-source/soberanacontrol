@@ -1,42 +1,89 @@
+<!-- Modal -->
+<div *ngIf="showModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm" (click)="closeModal()">
+  <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg mx-4 p-6" (click)="$event.stopPropagation()">
+    <div class="flex justify-between items-center mb-5">
+      <h3 class="text-lg font-bold text-slate-800">Novo Produto</h3>
+      <button (click)="closeModal()" class="text-slate-400 hover:text-slate-600"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+    </div>
+    <div *ngIf="errorMessage" class="mb-4 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-4 py-2.5">{{ errorMessage }}</div>
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1.5">Código Interno</label>
+        <input [(ngModel)]="novoProduto.codigoInterno" type="text" placeholder="Ex: CIM-001"
+          class="w-full border border-slate-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1.5">Estoque Mínimo</label>
+        <input [(ngModel)]="novoProduto.estoqueMinimo" type="number" min="0" placeholder="0"
+          class="w-full border border-slate-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+      </div>
+      <div class="col-span-2">
+        <label class="block text-sm font-medium text-slate-700 mb-1.5">Nome / Descrição *</label>
+        <input [(ngModel)]="novoProduto.nome" type="text" placeholder="Ex: Cimento CP II 50kg"
+          class="w-full border border-slate-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1.5">Categoria *</label>
+        <select [(ngModel)]="novoProduto.categoriaId"
+          class="w-full border border-slate-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <option value="">Selecione...</option>
+          <option *ngFor="let c of categorias" [value]="c.id">{{ c.nome }}</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1.5">Unidade de Medida *</label>
+        <select [(ngModel)]="novoProduto.unidadeMedidaId"
+          class="w-full border border-slate-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <option value="">Selecione...</option>
+          <option *ngFor="let u of unidades" [value]="u.id">{{ u.sigla }} — {{ u.descricao }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="flex justify-end gap-3 mt-6 pt-4 border-t border-slate-100">
+      <button (click)="closeModal()" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-800">Cancelar</button>
+      <button (click)="salvar()" [disabled]="isSaving"
+        class="px-5 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors disabled:opacity-60 flex items-center gap-2">
+        <svg *ngIf="isSaving" class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
+        {{ isSaving ? 'Salvando...' : 'Salvar Produto' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Page -->
 <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
   <div class="flex justify-between items-center mb-6">
     <div>
       <h2 class="text-2xl font-bold text-slate-800">Catálogo de Produtos</h2>
       <p class="text-slate-500 text-sm mt-1">Gerencie os itens, preços médios e dados base</p>
     </div>
-    <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
-      + Novo Produto
+    <button (click)="openModal()" class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium text-sm transition-colors">
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+      Novo Produto
     </button>
   </div>
-  
   <div class="border rounded-lg overflow-hidden">
     <table class="w-full text-left text-sm text-slate-600">
       <thead class="bg-slate-50 text-slate-700 border-b">
         <tr>
-          <th class="px-4 py-3 font-medium">Cód. Interno</th>
-          <th class="px-4 py-3 font-medium">Nome / Descrição</th>
-          <th class="px-4 py-3 font-medium text-right">Preço Médio (R$)</th>
+          <th class="px-4 py-3 font-medium">Código</th>
+          <th class="px-4 py-3 font-medium">Nome</th>
+          <th class="px-4 py-3 font-medium">Categoria</th>
+          <th class="px-4 py-3 font-medium">Unidade</th>
+          <th class="px-4 py-3 font-medium text-right">Preço Médio</th>
           <th class="px-4 py-3 font-medium text-right">Ações</th>
         </tr>
       </thead>
       <tbody class="divide-y">
-        <tr *ngIf="isLoading">
-          <td colspan="4" class="px-4 py-8 text-center text-slate-500">
-            Carregando produtos...
-          </td>
-        </tr>
-        <tr *ngIf="!isLoading && produtos.length === 0">
-          <td colspan="4" class="px-4 py-8 text-center text-slate-500">
-            Nenhum produto encontrado.
-          </td>
-        </tr>
-        <tr *ngFor="let prod of produtos" class="hover:bg-slate-50 transition-colors">
-          <td class="px-4 py-3 font-medium text-slate-800">{{ prod.codigoInterno }}</td>
-          <td class="px-4 py-3">{{ prod.nome }}</td>
-          <td class="px-4 py-3 text-right">{{ prod.precoMedio | currency:'BRL' }}</td>
-          <td class="px-4 py-3 text-right">
-            <button class="text-blue-600 hover:underline text-sm font-medium">Ver Detalhes</button>
-          </td>
+        <tr *ngIf="isLoading"><td colspan="6" class="px-4 py-10 text-center text-slate-400">Carregando...</td></tr>
+        <tr *ngIf="!isLoading && produtos.length === 0"><td colspan="6" class="px-4 py-10 text-center text-slate-400">Nenhum produto cadastrado.</td></tr>
+        <tr *ngFor="let p of produtos" class="hover:bg-slate-50 transition-colors">
+          <td class="px-4 py-3 font-mono text-xs text-slate-500">{{ p.codigoInterno || '—' }}</td>
+          <td class="px-4 py-3 font-medium text-slate-800">{{ p.nome }}</td>
+          <td class="px-4 py-3"><span class="bg-blue-50 text-blue-700 text-xs font-medium px-2 py-0.5 rounded-full">{{ p.categoria?.nome || '—' }}</span></td>
+          <td class="px-4 py-3 text-slate-500">{{ p.unidadeMedida?.sigla || '—' }}</td>
+          <td class="px-4 py-3 text-right font-medium text-green-700">{{ p.precoMedio | currency:'BRL' }}</td>
+          <td class="px-4 py-3 text-right"><button class="text-blue-600 hover:underline text-sm font-medium">Detalhes</button></td>
         </tr>
       </tbody>
     </table>

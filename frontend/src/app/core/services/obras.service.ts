@@ -14,4 +14,8 @@ export class ObrasService {
   getObras(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
+
+  criarObra(data: { nome: string; endereco: string }): Observable<any> {
+    return this.http.post<any>(this.apiUrl, data);
+  }
 }

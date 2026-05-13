@@ -14,4 +14,16 @@ export class ProdutosService {
   getProdutos(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
+
+  criarProduto(data: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, data);
+  }
+
+  getCategorias(): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.apiUrl}/categorias`);
+  }
+
+  getUnidadesMedida(): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.apiUrl}/unidadesmedida`);
+  }
 }
