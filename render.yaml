@@ -9,7 +9,7 @@ services:
     name: soberana-api
     runtime: docker
     plan: free
-    dockerfilePath: Dockerfile
+    dockerfilePath: backend/Dockerfile
     dockerContext: backend
     envVars:
       - key: ConnectionStrings__DefaultConnection
