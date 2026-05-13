@@ -52,8 +52,10 @@ using (var scope = app.Services.CreateScope())
                 SoberanaControl.Infrastructure.Data.DbSeeder.SeedAsync(dbContext).Wait();
                 break;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine($"[FATAL ERROR] Falha na migração do banco: {ex.Message}");
+                Console.WriteLine(ex.StackTrace);
                 retryCount--;
                 if (retryCount == 0) throw;
                 System.Threading.Thread.Sleep(3000);
@@ -74,11 +76,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// Habilita Swagger em produção também (para debug da API no Render)
+// Habilita Swagger e Erros detalhados em produção para depuração
+app.UseDeveloperExceptionPage();
+app.UseSwagger();
+app.UseSwaggerUI();
+
 if (!app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    Console.WriteLine("[DEBUG] Rodando em modo Produção");
 }
 
 app.UseCors("AllowFrontend");
