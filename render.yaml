@@ -19,7 +19,7 @@ services:
     name: soberana-frontend
     runtime: static
     rootDir: frontend
-    buildCommand: npm install && npm run build
+    buildCommand: npm install && npm run build -- --configuration production
     staticPublishPath: dist/frontend/browser
     routes:
       - type: rewrite
