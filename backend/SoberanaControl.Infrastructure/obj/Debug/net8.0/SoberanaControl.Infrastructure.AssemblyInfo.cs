@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SoberanaControl.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e21524d940c9f5cacfaa63d9aa22e83247faf751")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+222cf1edcc87ec8f5019f1aa2658fd1d09032f97")]
 [assembly: System.Reflection.AssemblyProductAttribute("SoberanaControl.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SoberanaControl.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

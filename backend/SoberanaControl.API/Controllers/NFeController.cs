@@ -22,7 +22,8 @@ namespace SoberanaControl.API.Controllers
         }
 
         [HttpPost("upload")]
-        public async Task<IActionResult> UploadNFe([FromForm] IFormFile file, [FromForm] Guid obraId)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> UploadNFe(IFormFile file, [FromForm] Guid obraId)
         {
             if (file == null || file.Length == 0)
                 return BadRequest("O arquivo XML é obrigatório.");

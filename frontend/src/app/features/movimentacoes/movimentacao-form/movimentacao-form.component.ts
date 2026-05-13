@@ -81,8 +81,13 @@ export class MovimentacaoFormComponent implements OnInit {
   save(): void {
     if (this.form.invalid) return;
 
+    const payload = {
+      ...this.form.value,
+      tipo: Number(this.form.value.tipo)
+    };
+
     this.isSaving = true;
-    this.movService.registrarMovimentacao(this.form.value).subscribe({
+    this.movService.registrarMovimentacao(payload).subscribe({
       next: () => {
         this.isSaving = false;
         this.onSave.emit();
