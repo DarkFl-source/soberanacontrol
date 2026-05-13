@@ -22,15 +22,22 @@ public class RegistrarMovimentacaoUseCase
 
         try
         {
-            // 1. Pegar usuário (Mocked as first user for now)
-            var usuarioId = await _dbContext.Usuarios.Select(u => u.Id).FirstOrDefaultAsync();
-            if (usuarioId == Guid.Empty) usuarioId = Guid.NewGuid();
+            // 1. Pegar usuário (Garantir que existe um usuário para a FK)
+            var usuario = await _dbContext.Usuarios.FirstOrDefaultAsync();
+            if (usuario == null) 
+                throw new Exception("Nenhum usuário encontrado no sistema. Por favor, execute o Seed do banco.");
+            
+            var usuarioId = usuario.Id;
 
-            // 2. Criar registro de movimentação
+            // 2. Normalizar IDs vazios para nulo (evita erro de FK com Guid.Empty)
+            var origemId = dto.ObraOrigemId == Guid.Empty ? null : dto.ObraOrigemId;
+            var destinoId = dto.ObraDestinoId == Guid.Empty ? null : dto.ObraDestinoId;
+
+            // 3. Criar registro de movimentação
             var movimentacao = new Movimentacao(
                 dto.ProdutoId,
-                dto.ObraOrigemId,
-                dto.ObraDestinoId,
+                origemId,
+                destinoId,
                 dto.Tipo,
                 dto.Quantidade,
                 dto.ValorUnitario,
@@ -39,24 +46,24 @@ public class RegistrarMovimentacaoUseCase
 
             _dbContext.Movimentacoes.Add(movimentacao);
 
-            // 3. Atualizar estoque(s)
+            // 4. Atualizar estoque(s)
             if (dto.Tipo == TipoMovimentacao.Entrada)
             {
-                if (dto.ObraDestinoId == null) throw new Exception("Obra de destino é obrigatória para Entrada.");
-                await AtualizarEstoque(dto.ProdutoId, dto.ObraDestinoId.Value, dto.Quantidade, true);
+                if (destinoId == null) throw new Exception("Obra de destino é obrigatória para Entrada.");
+                await AtualizarEstoque(dto.ProdutoId, destinoId.Value, dto.Quantidade, true);
             }
             else if (dto.Tipo == TipoMovimentacao.Saida)
             {
-                if (dto.ObraOrigemId == null) throw new Exception("Obra de origem é obrigatória para Saída.");
-                await AtualizarEstoque(dto.ProdutoId, dto.ObraOrigemId.Value, dto.Quantidade, false);
+                if (origemId == null) throw new Exception("Obra de origem é obrigatória para Saída.");
+                await AtualizarEstoque(dto.ProdutoId, origemId.Value, dto.Quantidade, false);
             }
             else if (dto.Tipo == TipoMovimentacao.Transferencia)
             {
-                if (dto.ObraOrigemId == null || dto.ObraDestinoId == null) 
+                if (origemId == null || destinoId == null) 
                     throw new Exception("Obras de origem e destino são obrigatórias para Transferência.");
                 
-                await AtualizarEstoque(dto.ProdutoId, dto.ObraOrigemId.Value, dto.Quantidade, false);
-                await AtualizarEstoque(dto.ProdutoId, dto.ObraDestinoId.Value, dto.Quantidade, true);
+                await AtualizarEstoque(dto.ProdutoId, origemId.Value, dto.Quantidade, false);
+                await AtualizarEstoque(dto.ProdutoId, destinoId.Value, dto.Quantidade, true);
             }
 
             await _dbContext.SaveChangesAsync();
