@@ -638,6 +638,7 @@
       "System.Threading.Channels/6.0.0": {},
       "SoberanaControl.Application/1.0.0": {
         "dependencies": {
+          "Microsoft.EntityFrameworkCore": "8.0.0",
           "SoberanaControl.Domain": "1.0.0"
         },
         "runtime": {

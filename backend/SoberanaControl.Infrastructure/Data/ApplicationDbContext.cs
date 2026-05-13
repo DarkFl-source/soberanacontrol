@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using SoberanaControl.Application.Interfaces;
 using SoberanaControl.Domain.Entities;
 
 namespace SoberanaControl.Infrastructure.Data;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 

@@ -10,6 +10,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<SoberanaControl.Infrastructure.Data.ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Registros de Serviços e Casos de Uso
+builder.Services.AddScoped<SoberanaControl.Application.Interfaces.IApplicationDbContext>(provider => provider.GetRequiredService<SoberanaControl.Infrastructure.Data.ApplicationDbContext>());
+builder.Services.AddScoped<SoberanaControl.Application.Services.NFeParserService>();
+builder.Services.AddScoped<SoberanaControl.Application.UseCases.ImportarNfeUseCase>();
+
 var app = builder.Build();
 
 // Auto-Apply Database Migrations (útil para nuvem como o Render)

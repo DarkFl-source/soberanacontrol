@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SoberanaControl.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+09b3d575343409428d3857d1bce15855d1812206")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+94de6cf8cae6d0ddd6bbb9b501aaac0c547a5b9c")]
 [assembly: System.Reflection.AssemblyProductAttribute("SoberanaControl.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SoberanaControl.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

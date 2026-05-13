@@ -1,0 +1,104 @@
+<div class="p-6">
+  <div class="flex justify-between items-center mb-6">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-900">Importar NFe</h1>
+      <p class="text-sm text-gray-500 mt-1">Automatize a entrada de produtos e atualização de custos através do XML da nota fiscal.</p>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-6 max-w-3xl">
+    
+    <!-- Alertas -->
+    <div *ngIf="errorMessage" class="mb-4 bg-red-50 border-l-4 border-red-500 p-4 rounded-md">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <div class="ml-3">
+          <p class="text-sm text-red-700">{{ errorMessage }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="uploadSuccess" class="mb-4 bg-green-50 border-l-4 border-green-500 p-4 rounded-md">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <div class="ml-3">
+          <p class="text-sm text-green-700">{{ successMessage }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Formulário -->
+    <div class="space-y-6">
+      
+      <!-- Seleção de Obra -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Obra de Destino do Estoque *</label>
+        <select [(ngModel)]="obraDestinoId" class="w-full rounded-md border border-gray-300 py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+          <option value="">-- Selecione uma Obra --</option>
+          <option *ngFor="let obra of obras" [value]="obra.id">{{ obra.nome }}</option>
+        </select>
+        <p class="mt-1 text-xs text-gray-500">Os produtos lidos na NFe serão adicionados ao estoque desta obra.</p>
+      </div>
+
+      <!-- Drag & Drop Area -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Arquivo XML da NFe *</label>
+        
+        <div 
+          class="mt-1 flex justify-center px-6 pt-10 pb-12 border-2 border-dashed rounded-lg transition-colors"
+          [ngClass]="{'border-blue-500 bg-blue-50': isDragging, 'border-gray-300 bg-gray-50': !isDragging}"
+          (dragover)="onDragOver($event)"
+          (dragleave)="onDragLeave($event)"
+          (drop)="onDrop($event)"
+        >
+          <div class="space-y-1 text-center">
+            
+            <svg *ngIf="!selectedFile" class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+              <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            
+            <svg *ngIf="selectedFile" class="mx-auto h-12 w-12 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+
+            <div class="flex text-sm text-gray-600 justify-center">
+              <label for="file-upload" class="relative cursor-pointer bg-transparent rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
+                <span>Upload de um arquivo</span>
+                <input id="file-upload" name="file-upload" type="file" class="sr-only" accept=".xml" (change)="onFileSelected($event)">
+              </label>
+              <p class="pl-1">ou arraste e solte</p>
+            </div>
+            
+            <p *ngIf="!selectedFile" class="text-xs text-gray-500">Apenas arquivos XML (NFe modelo 55)</p>
+            <p *ngIf="selectedFile" class="text-sm font-semibold text-gray-900 mt-2">{{ selectedFile.name }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="flex justify-end pt-4">
+        <button 
+          (click)="uploadFile()" 
+          [disabled]="isUploading || !selectedFile || !obraDestinoId"
+          class="flex items-center justify-center px-6 py-2.5 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-300 disabled:cursor-not-allowed transition-colors"
+        >
+          <svg *ngIf="isUploading" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          <span *ngIf="!isUploading">Processar e Importar XML</span>
+          <span *ngIf="isUploading">Processando NFe...</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
