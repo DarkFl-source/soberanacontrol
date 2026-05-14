@@ -81,9 +81,16 @@ export class MovimentacaoFormComponent implements OnInit {
   save(): void {
     if (this.form.invalid) return;
 
+    const raw = this.form.value;
+
+    // .NET Guid? cannot deserialize empty string '' — must be null
     const payload = {
-      ...this.form.value,
-      tipo: Number(this.form.value.tipo)
+      produtoId: raw.produtoId || null,
+      obraOrigemId: raw.obraOrigemId || null,
+      obraDestinoId: raw.obraDestinoId || null,
+      tipo: Number(raw.tipo),
+      quantidade: Number(raw.quantidade),
+      valorUnitario: Number(raw.valorUnitario)
     };
 
     this.isSaving = true;
@@ -93,7 +100,8 @@ export class MovimentacaoFormComponent implements OnInit {
         this.onSave.emit();
       },
       error: (err) => {
-        alert(err.error?.message || 'Erro ao registrar movimentação');
+        const msg = err.error?.message || err.error?.title || JSON.stringify(err.error) || 'Erro ao registrar movimentação';
+        alert(msg);
         this.isSaving = false;
       }
     });
