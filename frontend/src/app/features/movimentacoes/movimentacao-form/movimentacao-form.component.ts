@@ -20,6 +20,14 @@ export class MovimentacaoFormComponent implements OnInit {
   obras: any[] = [];
   isSaving = false;
 
+  get origemEqualsDestino(): boolean {
+    const tipo = Number(this.form.get('tipo')?.value);
+    if (tipo !== 3) return false;
+    const origem = this.form.get('obraOrigemId')?.value;
+    const destino = this.form.get('obraDestinoId')?.value;
+    return !!origem && !!destino && origem === destino;
+  }
+
   tipos = [
     { value: 1, label: 'Entrada (Ajuste/Avulsa)' },
     { value: 2, label: 'Saída (Consumo/Obra)' },
@@ -79,7 +87,7 @@ export class MovimentacaoFormComponent implements OnInit {
   }
 
   save(): void {
-    if (this.form.invalid) return;
+    if (this.form.invalid || this.origemEqualsDestino) return;
 
     const raw = this.form.value;
 
@@ -97,6 +105,7 @@ export class MovimentacaoFormComponent implements OnInit {
     this.movService.registrarMovimentacao(payload).subscribe({
       next: () => {
         this.isSaving = false;
+        alert('Movimentação registrada com sucesso!');
         this.onSave.emit();
       },
       error: (err) => {
